@@ -1,5 +1,6 @@
 FROM phusion/baseimage:0.9.11
-MAINTAINER Philipz <philipzheng@gmail.com>
+# Modified from philipz's container to exclude WP (https://github.com/philipz/docker-nginx-hhvm-wordpress)
+MAINTAINER Erik Fantasia <erik@erikfantasia.com>
 
 RUN apt-get update
 RUN apt-get -y upgrade
@@ -22,16 +23,6 @@ RUN apt-get update && apt-get install -y hhvm
 
 # nginx site conf
 ADD ./nginx-site.conf /etc/nginx/sites-available/default
-
-# Install Wordpress
-ADD WordPress/ /usr/share/nginx/www
-ADD wp-config.php /usr/share/nginx/www/wp-config.php
-RUN chown -R www-data:www-data /usr/share/nginx/www
-
-# Download nginx helper plugin
-RUN curl -O `curl -i -s https://wordpress.org/plugins/nginx-helper/ | egrep -o "https://downloads.wordpress.org/plugin/[^']+"`
-RUN unzip -o nginx-helper.*.zip -d /usr/share/nginx/www/wp-content/plugins
-RUN chown -R www-data:www-data /usr/share/nginx/www/wp-content/plugins/nginx-helper
 
 RUN mkdir /etc/service/nginx
 ADD nginx.sh /etc/service/nginx/run
