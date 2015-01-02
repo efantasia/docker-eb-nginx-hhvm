@@ -1,5 +1,6 @@
+# Modified from philipz's container to exclude WP
+# See: https://github.com/philipz/docker-nginx-hhvm-wordpress
 FROM phusion/baseimage:0.9.11
-# Modified from philipz's container to exclude WP (https://github.com/philipz/docker-nginx-hhvm-wordpress)
 MAINTAINER Erik Fantasia <erik@erikfantasia.com>
 
 RUN apt-get update
@@ -39,6 +40,6 @@ VOLUME ["/usr/share/nginx/www","/var/log/nginx/"]
 
 # private expose
 EXPOSE 80
-EXPOSE 443
+#EXPOSE 443
 
 CMD ["/sbin/my_init"]
